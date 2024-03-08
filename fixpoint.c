@@ -29,7 +29,7 @@ static int push(struct Builder *b,
                 void (*fn)(struct Inst const *ip, union Val *v, int i, void* ptr[]),
                 int imm, int x, int y, int z) {
     if (pow2_or_zero(b->insts)) {
-        b->inst = realloc(b->inst, b->insts ? 2*(size_t)b->insts : 1);
+        b->inst = realloc(b->inst, sizeof *b->inst * (b->insts ? 2*(size_t)b->insts : 1));
     }
     b->inst[b->insts] = (struct Inst) {fn,imm,x,y,z};
     return  b->insts++;
@@ -132,7 +132,7 @@ static void done_(struct Inst const *ip, union Val *v, int i, void* ptr[]) {
 
 struct Program* compile(struct Builder *b) {
     push(b, done_, 0,0,0,0);
-    struct Program *p = malloc(sizeof *p + (size_t)b->insts * sizeof *p->inst);
+    struct Program *p = calloc(1, sizeof *p + (size_t)b->insts * sizeof *p->inst);
     for (int i = 0; i < b->insts; i++) {
         int id = p->insts++;
         p->inst[id] = (struct Inst) {
