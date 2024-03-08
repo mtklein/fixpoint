@@ -30,19 +30,19 @@ static void test_square(void) {
     free(p);
 }
 
-static void test_loop(void) {
+static void test_loop_while(void) {
     struct Builder *b = builder();
     {
         store(b,1, load(b,0));
 
         int x    = load(b,1),
-            done = ige(b, x, splat(b,10)),
-            y    = bsel(b, done
-                         , x
-                         , iadd(b, x, splat(b,2)));
+            cond = ilt(b, x, splat(b,10)),
+            y    = bsel(b, cond
+                         , iadd(b, x, splat(b,2))
+                         , x);
         store(b,1,y);
 
-        store(b,0, loop(b,x,done));
+        store(b,0, loop_while(b,x,cond));
     }
     struct Program *p = compile(b);
 
@@ -62,6 +62,6 @@ static void test_loop(void) {
 
 int main(void) {
     test_square();
-    test_loop();
+    test_loop_while();
     return 0;
 }

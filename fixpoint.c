@@ -157,12 +157,12 @@ void run(struct Program const *p, int const n, void* ptr[]) {
     free(v);
 }
 
-defn(loop) {
+defn(loop_while) {
     if (v[ip->y].i) {
-        v->i = v[ip->x].i;
-        next;
+        struct Inst const *top = ip + ip->x;
+        top->fn(top, v + ip->x, i, ptr);
     }
-    struct Inst const *top = ip + ip->x;
-    top->fn(top, v + ip->x, i, ptr);
+    v->i = v[ip->x].i;
+    next;
 }
-int loop(struct Builder *b, int x, int y) { return push(b, loop_, 0,x,y,0); }
+int loop_while(struct Builder *b, int x, int y) { return push(b, loop_while_, 0,x,y,0); }

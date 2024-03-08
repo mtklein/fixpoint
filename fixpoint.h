@@ -36,4 +36,4 @@ int bor (struct Builder*, int,int);
 int bxor(struct Builder*, int,int);
 int bsel(struct Builder*, int cond, int t, int f);
 
-int loop(struct Builder*, int,int);
+int loop_while(struct Builder*, int top, int cond);
