@@ -80,9 +80,10 @@ defn(ile) { v->i = v[ip->x].i <= v[ip->y].i ? ~0 : 0; next; }
 defn(igt) { v->i = v[ip->x].i >  v[ip->y].i ? ~0 : 0; next; }
 defn(ige) { v->i = v[ip->x].i >= v[ip->y].i ? ~0 : 0; next; }
 
-defn(band) { v->i = v[ip->x].i & v[ip->y].i; next; }
-defn(bor ) { v->i = v[ip->x].i | v[ip->y].i; next; }
-defn(bxor) { v->i = v[ip->x].i ^ v[ip->y].i; next; }
+defn(band) { v->i = v[ip->x].i & v[ip->y].i             ; next; }
+defn(bor ) { v->i = v[ip->x].i | v[ip->y].i             ; next; }
+defn(bxor) { v->i = v[ip->x].i ^ v[ip->y].i             ; next; }
+defn(bsel) { v->i = v[ip->x].i ? v[ip->y].i : v[ip->z].i; next; }
 
 int fadd(struct Builder *b, int x, int y) { return push(b, fadd_, 0,x,y,0); }
 int fsub(struct Builder *b, int x, int y) { return push(b, fsub_, 0,x,y,0); }
@@ -107,9 +108,10 @@ int ile(struct Builder *b, int x, int y) { return push(b, ile_, 0,x,y,0); }
 int igt(struct Builder *b, int x, int y) { return push(b, igt_, 0,x,y,0); }
 int ige(struct Builder *b, int x, int y) { return push(b, ige_, 0,x,y,0); }
 
-int band(struct Builder *b, int x, int y) { return push(b, band_, 0,x,y,0); }
-int bor (struct Builder *b, int x, int y) { return push(b, bor_ , 0,x,y,0); }
-int bxor(struct Builder *b, int x, int y) { return push(b, bxor_, 0,x,y,0); }
+int band(struct Builder *b, int x, int y       ) { return push(b, band_, 0,x,y,0); }
+int bor (struct Builder *b, int x, int y       ) { return push(b, bor_ , 0,x,y,0); }
+int bxor(struct Builder *b, int x, int y       ) { return push(b, bxor_, 0,x,y,0); }
+int bsel(struct Builder *b, int x, int y, int z) { return push(b, bsel_, 0,x,y,z); }
 
 struct Program {
     int insts, unused;
