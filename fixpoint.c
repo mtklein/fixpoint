@@ -160,9 +160,9 @@ void run(struct Program const *p, int const n, void* ptr[]) {
 defn(loop_while) {
     if (v[ip->y].i) {
         int const jmp = ip->x;
-        ip[jmp].fn(ip+jmp, v+jmp, i, ptr);
+        ip += jmp - 1;
+        v  += jmp - 1;
     }
-    v->i = v[ip->x].i;
     next;
 }
-int loop_while(struct Builder *b, int x, int y) { return push(b, loop_while_, 0,x,y,0); }
+void loop_while(struct Builder *b, int x, int y) { (void)push(b, loop_while_, 0,x,y,0); }

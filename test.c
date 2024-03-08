@@ -41,8 +41,9 @@ static void test_loop_while(void) {
                          , iadd(b, x, splat(b,2))
                          , x);
         store(b,1,y);
+        loop_while(b,x,cond);
 
-        store(b,0, loop_while(b,x,cond));
+        store(b,0,y);
     }
     struct Program *p = compile(b);
 
