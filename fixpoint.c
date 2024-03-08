@@ -159,8 +159,8 @@ void run(struct Program const *p, int const n, void* ptr[]) {
 
 defn(loop_while) {
     if (v[ip->y].i) {
-        struct Inst const *top = ip + ip->x;
-        top->fn(top, v + ip->x, i, ptr);
+        int const jmp = ip->x;
+        ip[jmp].fn(ip+jmp, v+jmp, i, ptr);
     }
     v->i = v[ip->x].i;
     next;
