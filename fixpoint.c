@@ -16,6 +16,11 @@ struct Builder {
     struct Inst *inst;
 };
 
+struct Builder* builder(void) {
+    struct Builder *b = calloc(1, sizeof *b);
+    return b;
+}
+
 static _Bool pow2_or_zero(int n) {
     return (n & (n-1)) == 0;
 }
