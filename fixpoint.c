@@ -156,3 +156,10 @@ void run(struct Program const *p, int const n, void* ptr[]) {
     }
     free(v);
 }
+
+defn(fix) {
+    // TODO
+    v->i = v[ip->x].i;
+    next;
+}
+int fix(struct Builder *b, int x) { return push(b, fix_, 0,x,0,0); }
