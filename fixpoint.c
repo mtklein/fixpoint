@@ -157,6 +157,12 @@ void run(struct Program const *p, int const n, void* ptr[]) {
     free(v);
 }
 
+defn(mutate) {
+    v[ip->x] = v[ip->y];
+    next;
+}
+void mutate(struct Builder *b, int var, int val) { (void)push(b, mutate_, 0,var,val,0); }
+
 defn(loop_while) {
     if (v[ip->y].i) {
         int const jmp = ip->x;

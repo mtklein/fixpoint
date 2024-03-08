@@ -36,4 +36,5 @@ int bor (struct Builder*, int,int);
 int bxor(struct Builder*, int,int);
 int bsel(struct Builder*, int cond, int t, int f);
 
+void     mutate(struct Builder*, int var, int val);
 void loop_while(struct Builder*, int top, int cond);

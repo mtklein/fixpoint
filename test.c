@@ -33,23 +33,20 @@ static void test_square(void) {
 static void test_loop_while(void) {
     struct Builder *b = builder();
     {
-        store(b,1, load(b,0));
-
-        int x    = load(b,1),
+        int x    = load(b,0),
             cond = ilt(b, x, splat(b,10)),
             y    = bsel(b, cond
                          , iadd(b, x, splat(b,2))
                          , x);
-        store(b,1,y);
-        loop_while(b,x,cond);
+        mutate(b,x,y);
+        loop_while(b,cond,cond);
 
         store(b,0,y);
     }
     struct Program *p = compile(b);
 
-    int v[] = {0,1,2,3,4,5,6,7,8,9,10,11,12},
-        tmp[len(v)] = {0};
-    run(p, len(v), (void*[]){v,tmp});
+    int v[] = {0,1,2,3,4,5,6,7,8,9,10,11,12};
+    run(p, len(v), (void*[]){v});
 
     for (int i = 0; i < len(v); i++) {
         int want = (i >= 10) ? i
